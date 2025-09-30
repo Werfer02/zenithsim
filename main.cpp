@@ -33,6 +33,8 @@ struct node{
     node(evalfunction inevalfunc, std::vector<std::shared_ptr<node>> inconnections) : 
     evalfunc(inevalfunc), connections(inconnections) {}
 
+    node(evalfunction inevalfunc) : evalfunc(inevalfunc) {}
+
     std::vector<std::shared_ptr<node>> connections;
     evalfunction evalfunc;
 
@@ -54,5 +56,10 @@ int main(){
     auto Node2 = std::make_shared<node>(alwaysFalseEval);
     auto Node3 = std::make_shared<node>(alwaysTrueEval);
     auto Node4 = std::make_shared<node>(alwaysFalseEval);
+
+    std::cout << Node1->evaluate();
+    std::cout << Node2->evaluate();
+    std::cout << Node3->evaluate();
+    std::cout << Node4->evaluate();
 
 }
