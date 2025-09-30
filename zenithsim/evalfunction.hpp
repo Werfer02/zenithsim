@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 
 using evalfunction = bool(*)(std::vector<bool>);

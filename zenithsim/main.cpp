@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "evalfunction.hpp"
+#include "node.hpp"
 
 
 
