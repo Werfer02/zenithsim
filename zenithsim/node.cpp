@@ -20,3 +20,15 @@ int node::getdepth() const{
     }
     return depth + 1;
 }
+
+std::shared_ptr<node> node::create(const eval& e){
+
+    return std::make_shared<node>(e);
+
+}
+
+std::shared_ptr<node> node::create(const eval& e, const std::vector<std::shared_ptr<node>>& c){
+
+    return std::make_shared<node>(e, c);
+
+}
