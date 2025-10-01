@@ -15,7 +15,7 @@ int node::getdepth() const{
     int depth = -1;
     for(auto i : connections){
 
-        if(i->getdepth() > depth) depth = i->getdepth();
+        depth = std::max(depth, i->getdepth());
 
     }
     return depth + 1;
