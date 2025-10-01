@@ -16,19 +16,14 @@ std::ostream& operator<<(std::ostream& os, const node& n){
 std::ostream& operator<<(std::ostream& os, const std::shared_ptr<node>& n){ os << *n; return os; }
 
 std::string nodestable(const std::vector<std::shared_ptr<node>>& nodes){
-
-    std::vector<std::vector<std::shared_ptr<node>>> columns;
     node n(alwaysFalseEval, nodes);
-    int maxdepth = n.getdepth();
-    columns.resize(maxdepth);
-
-    for(auto i : nodes){
-        columns[i->getdepth()].push_back(i);
-    }
+    std::vector<std::vector<std::shared_ptr<node>>> columns(n.getdepth());
 
     int maxrows = 0;
-    for(auto col : columns){
-        maxrows = std::max(maxrows, static_cast<int>(col.size()));
+    for (auto i : nodes) {
+        int depth = i->getdepth();
+        columns[depth].push_back(i);
+        maxrows = std::max(maxrows, static_cast<int>(columns[depth].size()));
     }
 
     std::string table;

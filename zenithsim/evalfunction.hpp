@@ -1,8 +1,9 @@
 #pragma once
 
 #include <vector>
+#include <functional>
 
-using evalfunction = bool(*)(std::vector<bool>);
+using evalfunction = std::function<bool(std::vector<bool>)>;
 
 bool alwaysTrueEval(std::vector<bool>);
 bool alwaysFalseEval(std::vector<bool>);
