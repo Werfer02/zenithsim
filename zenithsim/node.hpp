@@ -13,6 +13,6 @@ struct node{
 
     node(evalfunction inevalfunc) : evalfunc(inevalfunc) {}
 
-    bool evaluate();
-    int getdepth();
+    bool evaluate() const;
+    int getdepth() const;
 };

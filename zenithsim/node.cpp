@@ -1,7 +1,7 @@
 #include "node.hpp"
 #include "evalfunction.hpp"
 
-bool node::evaluate(){
+bool node::evaluate() const{
     std::vector<bool> inputs;
     for(auto i : connections){
 
@@ -11,7 +11,7 @@ bool node::evaluate(){
     return evalfunc(inputs);
 }
 
-int node::getdepth(){
+int node::getdepth() const{
     int depth = -1;
     for(auto i : connections){
 

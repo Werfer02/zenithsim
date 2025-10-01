@@ -4,6 +4,7 @@
 
 #include "evalfunction.hpp"
 #include "node.hpp"
+#include "clutils.hpp"
 
 int main(){
 
@@ -17,12 +18,11 @@ int main(){
 
 
 
-    std::cout << Node5->evaluate() << "\n";
-    std::cout << Node6->evaluate() << "\n";
-
-    std::cout << Node1->getdepth() << "\n";
-    std::cout << Node2->getdepth() << "\n";
-    std::cout << Node5->getdepth() << "\n";
-    std::cout << Node6->getdepth() << "\n";
+    std::cout << *Node2 << "\n";
+    std::cout << *Node1 << "\n";
+    std::cout << *Node3 << "\n";
+    std::cout << *Node4 << "\n";
+    std::cout << *Node5 << "\n";
+    std::cout << *Node6 << "\n";
 
 }
