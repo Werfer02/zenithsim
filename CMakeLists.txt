@@ -5,6 +5,6 @@ add_executable(zenithsim zenithsim/main.cpp
                          zenithsim/node.cpp
                          zenithsim/evalfunction.cpp 
                          zenithsim/clutils.cpp 
-                         zenithsim/circuit.hpp)
+                         zenithsim/circuit.cpp)
 
 target_include_directories(zenithsim PRIVATE zenithsim)
