@@ -6,12 +6,14 @@
 struct node{
 
     std::vector<std::shared_ptr<node>> connections;
-    evalfunction evalfunc;
+    eval evalfunc;
 
-    node(evalfunction inevalfunc, std::vector<std::shared_ptr<node>> inconnections) : 
+    node(eval inevalfunc, std::vector<std::shared_ptr<node>> inconnections) : 
     evalfunc(inevalfunc), connections(inconnections) {}
 
-    node(evalfunction inevalfunc) : evalfunc(inevalfunc) {}
+    node(eval inevalfunc) : evalfunc(inevalfunc) {}
+
+    static node create();
 
     bool evaluate() const;
     int getdepth() const;

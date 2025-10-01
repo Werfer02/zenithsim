@@ -24,8 +24,8 @@ std::string nodestable(const std::vector<std::shared_ptr<node>>& nodes){
     std::string table;
     for(int i = 0; i < maxrows; i++){
         for(int j = 0; j < columns.size(); j++){
-            if (i < columns[j].size()) { table += std::to_string(columns[j][i]->evaluate()) + " "; }
-            else { table += " "; }
+            if(i < columns[j].size()){ table += std::to_string(columns[j][i]->evaluate()) + " "; }
+            else{ table += " "; }
         }
         table += "\n";
     }

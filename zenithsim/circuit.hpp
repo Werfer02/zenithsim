@@ -9,6 +9,7 @@ class Circuit {
     std::vector<std::shared_ptr<node>> outputnodes;
 
     void switchinput(int idx);
+    void setinput(int idx, bool input);
     std::vector<bool> evaloutputs();
     std::vector<bool> evaloutputs(std::vector<bool> inputs);
     evalfunction genevalfunction();

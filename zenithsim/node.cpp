@@ -8,7 +8,7 @@ bool node::evaluate() const{
         inputs.push_back(i->evaluate());
 
     }
-    return evalfunc(inputs);
+    return evalfunctionmap[evalfunc](inputs);
 }
 
 int node::getdepth() const{
