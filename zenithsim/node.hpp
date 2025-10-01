@@ -15,4 +15,6 @@ struct node{
 
     bool evaluate() const;
     int getdepth() const;
+
 };
+
