@@ -10,3 +10,13 @@ bool node::evaluate(){
     }
     return evalfunc(inputs);
 }
+
+int node::getdepth(){
+    int depth = -1;
+    for(auto i : connections){
+
+        if(i->getdepth() > depth) depth = i->getdepth();
+
+    }
+    return depth + 1;
+}

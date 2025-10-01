@@ -5,8 +5,6 @@
 #include "evalfunction.hpp"
 #include "node.hpp"
 
-static_assert(std::is_same_v<decltype(&ANDEval), evalfunction>, "ANDEval type mismatch!");
-
 int main(){
 
     auto Node1 = std::make_shared<node>(alwaysTrueEval);
@@ -17,7 +15,14 @@ int main(){
     auto Node5 = std::make_shared<node>(&ANDEval, std::vector<std::shared_ptr<node>>{Node1, Node2});
     auto Node6 = std::make_shared<node>(&ANDEval, std::vector<std::shared_ptr<node>>{Node1, Node3});
 
+
+
     std::cout << Node5->evaluate() << "\n";
     std::cout << Node6->evaluate() << "\n";
+
+    std::cout << Node1->getdepth() << "\n";
+    std::cout << Node2->getdepth() << "\n";
+    std::cout << Node5->getdepth() << "\n";
+    std::cout << Node6->getdepth() << "\n";
 
 }
