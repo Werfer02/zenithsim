@@ -24,7 +24,7 @@ void Circuit::setinputs(const std::vector<bool>& inputs){
     }
 }
 
-std::vector<bool> Circuit::evaloutputs(){
+std::vector<bool> Circuit::evaloutputs() const{
     std::vector<bool> outputs;
     for(auto i : outputnodes){
 
