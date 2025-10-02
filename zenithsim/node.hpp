@@ -3,20 +3,30 @@
 #include <memory>
 #include "evalfunction.hpp"
 
+struct node;
+
+struct connection{
+    std::shared_ptr<node> targetnode;
+    size_t outputidx;
+    connection(std::shared_ptr<node> n, size_t idx = 0) : targetnode(n), outputidx(idx) {}
+};
+
 struct node{
 
-    std::vector<std::shared_ptr<node>> connections;
+    std::vector<connection> connections;
     eval evalfunc;
 
     node(eval inevalfunc) : evalfunc(inevalfunc) {}
-    node(eval inevalfunc, std::vector<std::shared_ptr<node>> inconnections) : 
+    node(eval inevalfunc, std::vector<connection> inconnections) : 
     evalfunc(inevalfunc), connections(inconnections) {}
 
     static std::shared_ptr<node> create(const eval&);
     static std::shared_ptr<node> create(const eval&, const std::vector<std::shared_ptr<node>>&);
 
-    bool evaluate() const;
+    std::vector<bool> evaluate() const;
     int getdepth() const;
+
+    operator connection() const{ }
 
 };
 

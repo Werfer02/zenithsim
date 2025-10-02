@@ -28,7 +28,7 @@ std::vector<bool> Circuit::evaloutputs(){
     std::vector<bool> outputs;
     for(auto i : outputnodes){
 
-        outputs.push_back(i->evaluate());
+        outputs.push_back(i->evaluate()[0]);
 
     }
     return outputs;
@@ -55,5 +55,11 @@ evalfunction Circuit::genevalfunction(){
         outputs = evaloutputs(inputs);
         outputsmap.insert({inputs, outputs});
     }
+
+    evalfunction outputmapeval = [outputsmap](const std::vector<bool>& inputsvector) -> std::vector<bool>{
+
+        return {false};
+
+    };
 
 }

@@ -26,6 +26,4 @@ int main(){
     std::cout << Node6 << "\n";
     std::cout << Node7 << "\n\n";
 
-    std::cout << nodestable({Node1, Node2, Node3, Node4, Node5, Node6, Node7});
-
 }
