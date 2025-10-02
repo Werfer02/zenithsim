@@ -62,4 +62,6 @@ evalfunction Circuit::genevalfunction(){
 
     };
 
+    return outputmapeval;
+
 }

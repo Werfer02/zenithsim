@@ -27,7 +27,7 @@ std::shared_ptr<node> node::create(const eval& e){
 
 }
 
-std::shared_ptr<node> node::create(const eval& e, const std::vector<std::shared_ptr<node>>& c){
+std::shared_ptr<node> node::create(const eval& e, const std::vector<connection>& c){
 
     return std::make_shared<node>(e, c);
     

@@ -21,12 +21,10 @@ struct node{
     evalfunc(inevalfunc), connections(inconnections) {}
 
     static std::shared_ptr<node> create(const eval&);
-    static std::shared_ptr<node> create(const eval&, const std::vector<std::shared_ptr<node>>&);
+    static std::shared_ptr<node> create(const eval&, const std::vector<connection>&);
 
     std::vector<bool> evaluate() const;
     int getdepth() const;
-
-    operator connection() const{ }
 
 };
 
