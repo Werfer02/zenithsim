@@ -45,9 +45,9 @@ evalfunction Circuit::genevalfunction(){
     std::vector<bool> outputs;
     std::unordered_map<std::vector<bool>, std::vector<bool>> outputsmap;
     int combinations = 1 << inputnodes.size();
-    for (int i = 0; i < combinations; ++i) { // for each possible combination (digits are in i)
+    for(int i = 0; i < combinations; ++i) { // for each possible combination (digits are in i)
 
-        for (int j = 0; j < inputnodes.size(); ++j) { // for each digit in the combination
+        for(int j = 0; j < inputnodes.size(); ++j) { // for each digit in the combination
 
             inputs[j] = (i & (1 << j)); // get the digit by ANDing 1 << j and i 
 
@@ -58,7 +58,7 @@ evalfunction Circuit::genevalfunction(){
 
     evalfunction outputmapeval = [outputsmap](const std::vector<bool>& inputsvector) -> std::vector<bool>{
 
-        return {false};
+        return outputsmap.at(inputsvector);
 
     };
 

@@ -24,6 +24,6 @@ int main(){
     std::cout << Node4 << "\n";
     std::cout << Node5 << "\n";
     std::cout << Node6 << "\n";
-    std::cout << Node7 << "\n\n";
+    std::cout << Node7 << "\n";
 
 }

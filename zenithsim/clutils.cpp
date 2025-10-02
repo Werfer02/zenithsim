@@ -1,7 +1,7 @@
 #include <clutils.hpp>
 
 std::ostream& operator<<(std::ostream& os, const node& n){
-    os << "Node " << &n << ":\ndepth: " << n.getdepth() << "\neval: ";
+    os << "Node " << &n << ":\ndepth: " << n.getdepth() << "\neval:";
     for(auto i : n.evaluate()){
         os << i;
     }
