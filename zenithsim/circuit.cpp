@@ -44,7 +44,7 @@ std::vector<bool> Circuit::evaloutputs(const std::vector<bool>& inputs){
 
 evalfunction Circuit::genevalfunction(){
 
-    std::vector<bool> inputs;
+    std::vector<bool> inputs(inputnodes.size());
     std::vector<bool> outputs;
     std::unordered_map<std::vector<bool>, std::vector<bool>> outputsmap;
     int combinations = 1 << inputnodes.size();
@@ -61,7 +61,7 @@ evalfunction Circuit::genevalfunction(){
 
     int numinputs = inputs.size();
     evalfunction outputmapeval = [outputsmap, numinputs](const std::vector<bool>& inputsvector) -> std::vector<bool>{
-
+        
         if(inputsvector.size() == numinputs) return outputsmap.at(inputsvector);
         return std::vector<bool>(1, false);
 
