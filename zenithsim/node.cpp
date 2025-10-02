@@ -8,7 +8,7 @@ std::vector<bool> node::evaluate() const{
         inputs.push_back(i.targetnode->evaluate()[i.outputidx]);
 
     }
-    return evalfunctionmap[evalfunc](inputs);
+    return (*evalfunc)(inputs);
 }
 
 int node::getdepth() const{
@@ -28,6 +28,18 @@ std::shared_ptr<node> node::create(const eval& e){
 }
 
 std::shared_ptr<node> node::create(const eval& e, const std::vector<connection>& c){
+
+    return std::make_shared<node>(e, c);
+    
+}
+
+std::shared_ptr<node> node::create(const evalfunction& e){
+
+    return std::make_shared<node>(e);
+
+}
+
+std::shared_ptr<node> node::create(const evalfunction& e, const std::vector<connection>& c){
 
     return std::make_shared<node>(e, c);
     

@@ -5,21 +5,24 @@
 void Circuit::switchinput(const int& idx){
 
     if(!(idx < inputnodes.size())) std::cerr << "no such input: " << idx << ", inputnodes.size(): " << inputnodes.size();
-    inputnodes[idx]->evalfunc = (eval)!inputnodes[idx]->evalfunc; // thanks to FALSE = 0 and TRUE = 1
+    evalfunction currentevalfunction = *inputnodes[idx]->evalfunc;
+    eval currenteval = evalmap[currentevalfunction];
+    eval newEvalState = (eval)!currenteval; // thanks to FALSE = 0 and TRUE = 1
+    inputnodes[idx]->evalfunc = std::make_shared<evalfunction>(evalfunctionmap[newEvalState]);
 
 }
 
 void Circuit::setinput(const int& idx, const bool& input){
 
     if(!(idx < inputnodes.size())) std::cerr << "no such input: " << idx << ", inputnodes.size(): " << inputnodes.size();
-    inputnodes[idx]->evalfunc = (eval)input; // again, thanks to FALSE = 0 and TRUE = 1
+    inputnodes[idx]->evalfunc = std::make_shared<evalfunction>(evalfunctionmap[(eval)input]); // again, thanks to FALSE = 0 and TRUE = 1
 
 }
 
 void Circuit::setinputs(const std::vector<bool>& inputs){
     for(int i = 0; i < inputnodes.size(); i++){
 
-        inputnodes[i]->evalfunc = (eval)inputs[i]; // again again
+        inputnodes[i]->evalfunc = std::make_shared<evalfunction>(evalfunctionmap[(eval)inputs[i]]); // again again
 
     }
 }
@@ -28,7 +31,7 @@ std::vector<bool> Circuit::evaloutputs() const{
     std::vector<bool> outputs;
     for(auto i : outputnodes){
 
-        outputs.push_back(i->evaluate()[0]);
+        outputs.push_back(i.targetnode->evaluate()[i.outputidx]);
 
     }
     return outputs;
@@ -56,9 +59,11 @@ evalfunction Circuit::genevalfunction(){
         outputsmap.insert({inputs, outputs});
     }
 
-    evalfunction outputmapeval = [outputsmap](const std::vector<bool>& inputsvector) -> std::vector<bool>{
+    int numinputs = inputs.size();
+    evalfunction outputmapeval = [outputsmap, numinputs](const std::vector<bool>& inputsvector) -> std::vector<bool>{
 
-        return outputsmap.at(inputsvector);
+        if(inputsvector.size() == numinputs) return outputsmap.at(inputsvector);
+        return std::vector<bool>(1, false);
 
     };
 

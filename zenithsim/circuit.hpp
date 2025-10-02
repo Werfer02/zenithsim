@@ -5,10 +5,10 @@
 class Circuit {
 
     std::vector<std::shared_ptr<node>> inputnodes;
-    std::vector<std::shared_ptr<node>> outputnodes;
+    std::vector<connection> outputnodes;
     
 public:
-    Circuit(std::vector<std::shared_ptr<node>> inputnodesin, std::vector<std::shared_ptr<node>> outputnodesin) : 
+    Circuit(std::vector<std::shared_ptr<node>> inputnodesin, std::vector<connection> outputnodesin) : 
     inputnodes(inputnodesin), outputnodes(outputnodesin) {};
 
     void switchinput(const int&);

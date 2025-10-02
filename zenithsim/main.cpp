@@ -28,6 +28,19 @@ int main(){
     std::cout << Node7 << "\n";
 
     Circuit Circuit1({Node1, Node2, Node3, Node4}, {Node7});
-    
+    std::cout << Circuit1 << "\n";
+
+    Circuit1.setinputs({1, 0, 0, 0});
+    std::cout << Circuit1 << "\n";
+
+    Circuit1.setinputs({1, 1, 1, 1});
+    std::cout << Circuit1 << "\n";
+
+    Circuit1.setinputs({1, 0, 1, 0});
+    std::cout << Circuit1 << "\n";
+
+    auto Node8 = node::create(TRUE);
+    auto Node9 = node::create(FALSE);
+    auto Node10 = node::create(Circuit1.genevalfunction(), {Node8, Node9});
 
 }

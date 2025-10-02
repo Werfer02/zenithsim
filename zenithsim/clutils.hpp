@@ -3,9 +3,10 @@
 #include <iostream>
 
 #include "node.hpp"
+#include "circuit.hpp"
 
 std::ostream& operator<<(std::ostream& os, const node& n);
 
 std::ostream& operator<<(std::ostream& os, const std::shared_ptr<node>& n);
 
-std::string nodestable(const std::vector<std::shared_ptr<node>>& nodes);
+std::ostream& operator<<(std::ostream& os, const Circuit& c);
