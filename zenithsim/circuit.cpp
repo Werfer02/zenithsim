@@ -15,3 +15,45 @@ void Circuit::setinput(const int& idx, const bool& input){
     inputnodes[idx]->evalfunc = (eval)input; // again, thanks to FALSE = 0 and TRUE = 1
 
 }
+
+void Circuit::setinputs(const std::vector<bool>& inputs){
+    for(int i = 0; i < inputnodes.size(); i++){
+
+        inputnodes[i]->evalfunc = (eval)inputs[i]; // again again
+
+    }
+}
+
+std::vector<bool> Circuit::evaloutputs(){
+    std::vector<bool> outputs;
+    for(auto i : outputnodes){
+
+        outputs.push_back(i->evaluate());
+
+    }
+    return outputs;
+}
+
+std::vector<bool> Circuit::evaloutputs(const std::vector<bool>& inputs){
+    setinputs(inputs);
+    return evaloutputs();
+}
+
+evalfunction Circuit::genevalfunction(){
+
+    std::vector<bool> inputs;
+    std::vector<bool> outputs;
+    std::unordered_map<std::vector<bool>, std::vector<bool>> outputsmap;
+    int combinations = 1 << inputnodes.size();
+    for (int i = 0; i < combinations; ++i) { // for each possible combination (digits are in i)
+
+        for (int j = 0; j < inputnodes.size(); ++j) { // for each digit in the combination
+
+            inputs[j] = (i & (1 << j)); // get the digit by ANDing 1 << j and i 
+
+        }
+        outputs = evaloutputs(inputs);
+        outputsmap.insert({inputs, outputs});
+    }
+
+}

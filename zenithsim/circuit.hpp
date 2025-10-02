@@ -10,6 +10,7 @@ class Circuit {
 
     void switchinput(const int&);
     void setinput(const int&, const bool&);
+    void setinputs(const std::vector<bool>&);
     std::vector<bool> evaloutputs();
     std::vector<bool> evaloutputs(const std::vector<bool>&);
     evalfunction genevalfunction();
