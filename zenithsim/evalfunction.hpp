@@ -26,20 +26,14 @@ enum eval {
     XOR
 };
 
-std::unordered_map<eval, evalfunction> evalfunctionmap {
-    {TRUE,  alwaysTrueEval},
-    {FALSE, alwaysFalseEval},
-    {AND,   ANDEval},
-    {OR,    OREval},
-    {NOT,   NOTEval},
-    {XOR,   XOREval}
+struct evalfunctionhash{
+    size_t operator()(const evalfunction& f) const;
 };
 
-std::unordered_map<evalfunction, eval> evalmap {
-    {alwaysTrueEval,  TRUE},
-    {alwaysFalseEval, FALSE},
-    {ANDEval,         AND},
-    {OREval,          OR},
-    {NOTEval,         NOT},
-    {XOREval,         XOR}
+struct evalfunctionequal{
+    bool operator()(const evalfunction& f1, const evalfunction& f2) const;
 };
+
+extern std::unordered_map<eval, evalfunction> evalfunctionmap;
+
+extern std::unordered_map<evalfunction, eval, evalfunctionhash, evalfunctionequal> evalmap;

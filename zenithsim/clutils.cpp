@@ -11,7 +11,7 @@ std::ostream& operator<<(std::ostream& os, const node& n){
 std::ostream& operator<<(std::ostream& os, const std::shared_ptr<node>& n){ os << *n; return os; }
 
 std::string nodestable(const std::vector<std::shared_ptr<node>>& nodes){
-    node n(alwaysFalseEval, nodes);
+    node n(FALSE, nodes);
     std::vector<std::vector<std::shared_ptr<node>>> columns(n.getdepth());
 
     int maxrows = 0;
