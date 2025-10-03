@@ -1,7 +1,8 @@
 #include "node.hpp"
 
 #include <iostream>
-#include "evalfunction.hpp"
+
+namespace zenithsim {
 
 std::vector<bool> node::evaluate() const{
     std::vector<bool> inputs;
@@ -50,7 +51,25 @@ std::shared_ptr<node> node::create(const evalfunction& e, const std::vector<conn
 void node::addconnection(const connection& c){
     connections.push_back(c);
 }
-void node::addconnection(const connection& c, int idx){
+
+void node::setconnection(const connection& c, int idx){
     if(!(idx < connections.size())) std::cerr << "no such input: " << idx << ", connections.size(): " << connections.size();
     connections[idx] = c;
+}
+void node::setconnections(const std::vector<connection>& inconnections){
+    connections = inconnections;
+}
+
+std::shared_ptr<evalfunction> node::getevalfunc() const {
+    return evalfunc;
+}
+
+void node::setevalfunc(std::shared_ptr<evalfunction> ef) { 
+    evalfunc = ef; 
+}
+
+int node::getid(){
+    return id;
+}
+
 }

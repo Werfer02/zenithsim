@@ -1,9 +1,10 @@
 #pragma once
 
 #include <memory>
+#include "fwddecls.hpp"
 #include "evalfunction.hpp"
 
-struct node;
+namespace zenithsim {
 
 struct connection{
     std::shared_ptr<node> targetnode;
@@ -11,18 +12,21 @@ struct connection{
     connection(std::shared_ptr<node> n, size_t idx = 0) : targetnode(n), outputidx(idx) {}
 };
 
-struct node{
+class node{
 
     std::vector<connection> connections;
     std::shared_ptr<evalfunction> evalfunc;
+    static int idcounter;
+    int id;
 
-    node(eval ineval) : evalfunc(std::make_shared<evalfunction>(evalfunctionmap[ineval])) {}
-    node(evalfunction ineval) : evalfunc(std::make_shared<evalfunction>(ineval)) {}
+public:
+    node(eval ineval) : evalfunc(std::make_shared<evalfunction>(evalfunctionmap[ineval])) { id = idcounter++; }
+    node(evalfunction ineval) : evalfunc(std::make_shared<evalfunction>(ineval)) { id = idcounter++; }
 
     node(eval ineval, std::vector<connection> inconnections) : 
-    evalfunc(std::make_shared<evalfunction>(evalfunctionmap[ineval])), connections(inconnections) {}
+    evalfunc(std::make_shared<evalfunction>(evalfunctionmap[ineval])), connections(inconnections) { id = idcounter++; }
     node(evalfunction ineval, std::vector<connection> inconnections) : 
-    evalfunc(std::make_shared<evalfunction>(ineval)), connections(inconnections) {}
+    evalfunc(std::make_shared<evalfunction>(ineval)), connections(inconnections) { id = idcounter++; }
 
     static std::shared_ptr<node> create(const eval&);
     static std::shared_ptr<node> create(const eval&, const std::vector<connection>&);
@@ -30,10 +34,21 @@ struct node{
     static std::shared_ptr<node> create(const evalfunction&, const std::vector<connection>&);
 
     void addconnection(const connection&);
-    void addconnection(const connection&, int idx);
+
+    void setconnection(const connection&, int idx);
+    void setconnections(const std::vector<connection>&);
+
+    std::shared_ptr<evalfunction> getevalfunc() const;
+    void setevalfunc(std::shared_ptr<evalfunction>);
+
+    int getid();
 
     std::vector<bool> evaluate() const;
     int getdepth() const;
 
+    friend std::ostream& operator<<(std::ostream&, const node&);
+    friend std::ostream& operator<<(std::ostream&, const Circuit&);
+
 };
 
+}

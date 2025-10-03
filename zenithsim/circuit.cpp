@@ -2,27 +2,29 @@
 
 #include <iostream>
 
+namespace zenithsim {
+
 void Circuit::switchinput(const int& idx){
 
     if(!(idx < inputnodes.size())) std::cerr << "no such input: " << idx << ", inputnodes.size(): " << inputnodes.size();
-    evalfunction currentevalfunction = *inputnodes[idx]->evalfunc;
+    evalfunction currentevalfunction = *inputnodes[idx]->getevalfunc();
     eval currenteval = evalmap[currentevalfunction];
-    eval newEvalState = (eval)!currenteval; // thanks to FALSE = 0 and TRUE = 1
-    inputnodes[idx]->evalfunc = std::make_shared<evalfunction>(evalfunctionmap[newEvalState]);
+    eval newEvalState = (eval)!(int)currenteval; // thanks to FALSE = 0 and TRUE = 1
+    inputnodes[idx]->setevalfunc(std::make_shared<evalfunction>(evalfunctionmap[newEvalState]));
 
 }
 
 void Circuit::setinput(const int& idx, const bool& input){
 
     if(!(idx < inputnodes.size())) std::cerr << "no such input: " << idx << ", inputnodes.size(): " << inputnodes.size();
-    inputnodes[idx]->evalfunc = std::make_shared<evalfunction>(evalfunctionmap[(eval)input]); // again, thanks to FALSE = 0 and TRUE = 1
+    inputnodes[idx]->setevalfunc(std::make_shared<evalfunction>(evalfunctionmap[(eval)input])); // again, thanks to FALSE = 0 and TRUE = 1
 
 }
 
 void Circuit::setinputs(const std::vector<bool>& inputs){
     for(int i = 0; i < inputnodes.size(); i++){
 
-        inputnodes[i]->evalfunc = std::make_shared<evalfunction>(evalfunctionmap[(eval)inputs[i]]); // again again
+        inputnodes[i]->setevalfunc(std::make_shared<evalfunction>(evalfunctionmap[(eval)inputs[i]])); // again again
 
     }
 }
@@ -68,5 +70,7 @@ evalfunction Circuit::genevalfunction(){
     };
 
     return outputmapeval;
+
+}
 
 }

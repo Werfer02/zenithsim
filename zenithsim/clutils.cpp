@@ -1,5 +1,10 @@
 #include <clutils.hpp>
 
+#include "node.hpp"
+#include "circuit.hpp"
+
+namespace zenithsim {
+
 std::ostream& operator<<(std::ostream& os, const node& n){
     os << "Node " << &n << ":\ndepth: " << n.getdepth() << "\nconnections:\n";
     for(auto i : n.connections){
@@ -24,4 +29,6 @@ std::ostream& operator<<(std::ostream& os, const Circuit& c){
         os << i.targetnode.get() << ", eval: " << i.targetnode->evaluate()[i.outputidx] << "\n";
     }
     return os;
+}
+
 }

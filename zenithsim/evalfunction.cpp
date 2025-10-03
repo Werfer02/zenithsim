@@ -1,5 +1,7 @@
 #include "evalfunction.hpp"
 
+namespace zenithsim {
+
 std::vector<bool> alwaysTrueEval(const std::vector<bool>&){ return {true}; }
 std::vector<bool> alwaysFalseEval(const std::vector<bool>&){ return {false}; }
 
@@ -35,19 +37,21 @@ bool evalfunctionequal::operator()(const evalfunction& f1, const evalfunction& f
 }
 
 std::unordered_map<eval, evalfunction> evalfunctionmap {
-    {TRUE,  alwaysTrueEval},
-    {FALSE, alwaysFalseEval},
-    {AND,   ANDEval},
-    {OR,    OREval},
-    {NOT,   NOTEval},
-    {XOR,   XOREval}
+    {eval::TRUE,  alwaysTrueEval},
+    {eval::FALSE, alwaysFalseEval},
+    {eval::AND,   ANDEval},
+    {eval::OR,    OREval},
+    {eval::NOT,   NOTEval},
+    {eval::XOR,   XOREval}
 };
 
 std::unordered_map<evalfunction, eval, evalfunctionhash, evalfunctionequal> evalmap {
-    {alwaysTrueEval,  TRUE},
-    {alwaysFalseEval, FALSE},
-    {ANDEval,         AND},
-    {OREval,          OR},
-    {NOTEval,         NOT},
-    {XOREval,         XOR}
+    {alwaysTrueEval,  eval::TRUE},
+    {alwaysFalseEval, eval::FALSE},
+    {ANDEval,         eval::AND},
+    {OREval,          eval::OR},
+    {NOTEval,         eval::NOT},
+    {XOREval,         eval::XOR}
 };
+
+}

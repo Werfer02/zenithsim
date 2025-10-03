@@ -7,17 +7,19 @@
 #include "circuit.hpp"
 #include "clutils.hpp"
 
+namespace zs = zenithsim;
+
 int main(){
 
-    auto Node1 = node::create(TRUE);
-    auto Node2 = node::create(TRUE);
-    auto Node3 = node::create(FALSE);
-    auto Node4 = node::create(FALSE);
+    auto Node1 = zs::node::create(zs::eval::TRUE);
+    auto Node2 = zs::node::create(zs::eval::TRUE);
+    auto Node3 = zs::node::create(zs::eval::FALSE);
+    auto Node4 = zs::node::create(zs::eval::FALSE);
 
-    auto Node5 = node::create(AND, {Node1, Node2});
-    auto Node6 = node::create(AND, {Node3, Node4});
+    auto Node5 = zs::node::create(zs::eval::AND, {Node1, Node2});
+    auto Node6 = zs::node::create(zs::eval::AND, {Node3, Node4});
 
-    auto Node7 = node::create(XOR, {Node5, Node6});
+    auto Node7 = zs::node::create(zs::eval::XOR, {Node5, Node6});
 
     std::cout << Node1 << "\n";
     std::cout << Node2 << "\n";
@@ -27,7 +29,7 @@ int main(){
     std::cout << Node6 << "\n";
     std::cout << Node7 << "\n";
 
-    Circuit Circuit1({Node1, Node2, Node3, Node4}, {Node7});
+    zs::Circuit Circuit1({Node1, Node2, Node3, Node4}, {Node7});
     std::cout << Circuit1 << "\n";
 
     Circuit1.setinputs({1, 0, 0, 0});
@@ -39,8 +41,16 @@ int main(){
     Circuit1.setinputs({1, 0, 1, 0});
     std::cout << Circuit1 << "\n";
 
-    auto Node8 = node::create(TRUE);
-    auto Node9 = node::create(FALSE);
-    auto Node10 = node::create(Circuit1.genevalfunction(), {Node8, Node8, Node9, Node9});
+    auto Node8 = zs::node::create(zs::eval::TRUE);
+    auto Node9 = zs::node::create(zs::eval::FALSE);
+    auto Node10 = zs::node::create(Circuit1.genevalfunction(), {Node8, Node8, Node9, Node9});
+
+    std::cout << Node10 << "\n";
+    Node10->setconnections({Node8, Node9, Node9, Node9});
+    std::cout << Node10 << "\n";
+    Node10->setconnections({Node8, Node8, Node8, Node8});
+    std::cout << Node10 << "\n";
+    Node10->setconnections({Node8, Node9, Node8, Node9});
+    std::cout << Node10 << "\n";
 
 }

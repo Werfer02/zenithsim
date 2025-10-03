@@ -4,6 +4,8 @@
 #include <functional>
 #include <unordered_map>
 
+namespace zenithsim {
+
 using evalfunction = std::function<std::vector<bool>(const std::vector<bool>&)>;
 
 std::vector<bool> alwaysTrueEval(const std::vector<bool>&);
@@ -17,7 +19,7 @@ std::vector<bool> NOTEval(const std::vector<bool>& inputs);
 
 std::vector<bool> XOREval(const std::vector<bool>& inputs);
 
-enum eval {
+enum class eval {
     FALSE = 0,
     TRUE = 1,
     AND,
@@ -37,3 +39,5 @@ struct evalfunctionequal{
 extern std::unordered_map<eval, evalfunction> evalfunctionmap;
 
 extern std::unordered_map<evalfunction, eval, evalfunctionhash, evalfunctionequal> evalmap;
+
+}

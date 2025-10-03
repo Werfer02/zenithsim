@@ -1,7 +1,13 @@
 #pragma once
 
+#include <vector>
+#include <memory>
+
+#include "evalfunction.hpp"
 #include "node.hpp"
 
+namespace zenithsim {
+    
 class Circuit {
 
     std::vector<std::shared_ptr<node>> inputnodes;
@@ -21,3 +27,5 @@ public:
     friend std::ostream& operator<<(std::ostream&, const Circuit&);
 
 };
+
+}
