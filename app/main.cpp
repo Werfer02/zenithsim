@@ -5,11 +5,30 @@
 #include "imgui_impl_opengl3.h"
 #include "GLFW/glfw3.h"
 
+void DrawRadarIcon(ImDrawList* draw_list, ImVec2 center, float radius, ImU32 color) {
+    // Filled base circle
+    draw_list->AddCircleFilled(center, radius, color, 32);
+
+    // Crosshair lines
+    draw_list->AddLine(ImVec2(center.x - radius, center.y), ImVec2(center.x + radius, center.y), IM_COL32(255, 255, 255, 255), 1.0f);
+    draw_list->AddLine(ImVec2(center.x, center.y - radius), ImVec2(center.x, center.y + radius), IM_COL32(255, 255, 255, 255), 1.0f);
+
+    // Extra ring (optional)
+    draw_list->AddCircle(center, radius * 0.66f, IM_COL32(255, 255, 255, 128), 32, 1.0f);
+}
+
+
+void glfw_error_callback(int error, const char* description){
+    std::cerr << "GLFW error " << error << ": " << description << std::endl;
+}
+
 int main(){
     
     std::cout << "Hello, World!\n";
 
     glfwInit();
+    glfwSetErrorCallback(glfw_error_callback);
+    
     GLFWwindow* window = glfwCreateWindow(1000, 1000, "zenithsim gui", nullptr, nullptr);
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // vsync
@@ -28,6 +47,21 @@ int main(){
 
         bool show = true;
         ImGui::ShowDemoWindow(&show);
+
+        ImGui::Begin("Custom Shape Demo");
+
+        ImVec2 window_pos = ImGui::GetWindowPos();      // Top-left corner of the window (screen space)
+        ImVec2 window_size = ImGui::GetWindowSize();    // Width and height of the window
+
+        ImVec2 center = ImVec2(
+            window_pos.x + window_size.x * 0.5f,
+            window_pos.y + window_size.y * 0.5f
+        );
+        ImDrawList* draw = ImGui::GetWindowDrawList();
+
+        DrawRadarIcon(draw, center, 80.0f, IM_COL32(0, 200, 100, 200));
+
+        ImGui::End();
         
         ImGui::Render();
 
@@ -52,4 +86,4 @@ int main(){
     glfwDestroyWindow(window);
     glfwTerminate();
 
-}
+}   

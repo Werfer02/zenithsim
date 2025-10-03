@@ -1,0 +1,3 @@
+/home/Jacek/Projects/zenithsim/_deps/glfw-subbuild/CMakeFiles/glfw-populate.dir
+/home/Jacek/Projects/zenithsim/_deps/glfw-subbuild/CMakeFiles/edit_cache.dir
+/home/Jacek/Projects/zenithsim/_deps/glfw-subbuild/CMakeFiles/rebuild_cache.dir
