@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/home/Jacek/Projects/zenithsim/_deps/glfw-subbuild/cmake_install.cmake"
-	],
-	"Parallel" : false
-}
