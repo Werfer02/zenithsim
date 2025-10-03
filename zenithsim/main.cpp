@@ -41,6 +41,6 @@ int main(){
 
     auto Node8 = node::create(TRUE);
     auto Node9 = node::create(FALSE);
-    auto Node10 = node::create(Circuit1.genevalfunction(), {Node8, Node9});
+    auto Node10 = node::create(Circuit1.genevalfunction(), {Node8, Node8, Node9, Node9});
 
 }

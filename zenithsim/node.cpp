@@ -1,4 +1,6 @@
 #include "node.hpp"
+
+#include <iostream>
 #include "evalfunction.hpp"
 
 std::vector<bool> node::evaluate() const{
@@ -43,4 +45,12 @@ std::shared_ptr<node> node::create(const evalfunction& e, const std::vector<conn
 
     return std::make_shared<node>(e, c);
     
+}
+
+void node::addconnection(const connection& c){
+    connections.push_back(c);
+}
+void node::addconnection(const connection& c, int idx){
+    if(!(idx < connections.size())) std::cerr << "no such input: " << idx << ", connections.size(): " << connections.size();
+    connections[idx] = c;
 }

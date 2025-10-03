@@ -29,6 +29,9 @@ struct node{
     static std::shared_ptr<node> create(const evalfunction&);
     static std::shared_ptr<node> create(const evalfunction&, const std::vector<connection>&);
 
+    void addconnection(const connection&);
+    void addconnection(const connection&, int idx);
+
     std::vector<bool> evaluate() const;
     int getdepth() const;
 
