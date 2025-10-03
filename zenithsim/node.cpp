@@ -68,7 +68,9 @@ void node::setevalfunc(std::shared_ptr<evalfunction> ef) {
     evalfunc = ef; 
 }
 
-int node::getid(){
+int node::idcounter = 0;
+
+int node::getid() const{
     return id;
 }
 
