@@ -1,24 +1,17 @@
 #include <iostream>
+#include <algorithm>
+#include <vector>
+#include <map>
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "GLFW/glfw3.h"
 
-void DrawRadarIcon(ImDrawList* draw_list, ImVec2 center, float radius, ImU32 color) {
-    // Filled base circle
-    draw_list->AddCircleFilled(center, radius, color, 32);
+#include "uinode.hpp"
+#include "node.hpp"
 
-    // Crosshair lines
-    draw_list->AddLine(ImVec2(center.x - radius, center.y), ImVec2(center.x + radius, center.y), IM_COL32(255, 255, 255, 255), 1.0f);
-    draw_list->AddLine(ImVec2(center.x, center.y - radius), ImVec2(center.x, center.y + radius), IM_COL32(255, 255, 255, 255), 1.0f);
-
-    // Extra ring (optional)
-    draw_list->AddCircle(center, radius * 0.66f, IM_COL32(255, 255, 255, 128), 32, 1.0f);
-}
-
-
-void glfw_error_callback(int error, const char* description){
+void glfwerrorcallback(int error, const char* description){
     std::cerr << "GLFW error " << error << ": " << description << std::endl;
 }
 
@@ -27,7 +20,7 @@ int main(){
     std::cout << "Hello, World!\n";
 
     glfwInit();
-    glfwSetErrorCallback(glfw_error_callback);
+    glfwSetErrorCallback(glfwerrorcallback);
     
     GLFWwindow* window = glfwCreateWindow(1000, 1000, "zenithsim gui", nullptr, nullptr);
     glfwMakeContextCurrent(window);
@@ -36,6 +29,10 @@ int main(){
     ImGui::CreateContext();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init();
+
+    std::vector<uinode> uinodes;
+
+    float shapewidth = 0, shaperadius = 0;
 
     while(!glfwWindowShouldClose(window)){
 
@@ -48,20 +45,30 @@ int main(){
         bool show = true;
         ImGui::ShowDemoWindow(&show);
 
-        ImGui::Begin("Custom Shape Demo");
+        ImGui::Begin("Custom Shape");{
 
-        ImVec2 window_pos = ImGui::GetWindowPos();      // Top-left corner of the window (screen space)
-        ImVec2 window_size = ImGui::GetWindowSize();    // Width and height of the window
+            ImGui::SliderFloat("width", &shapewidth, -1.0f, 500.0f);
+            ImGui::SliderFloat("connection radius", &shaperadius, -1.0f, 200.0f);
 
-        ImVec2 center = ImVec2(
-            window_pos.x + window_size.x * 0.5f,
-            window_pos.y + window_size.y * 0.5f
-        );
-        ImDrawList* draw = ImGui::GetWindowDrawList();
+            ImVec2 window_pos = ImGui::GetWindowPos();
+            ImVec2 window_size = ImGui::GetWindowSize();
 
-        DrawRadarIcon(draw, center, 80.0f, IM_COL32(0, 200, 100, 200));
+            ImVec2 center = ImVec2(
+                window_pos.x + window_size.x * 0.5f,
+                window_pos.y + window_size.y * 0.5f
+            );
 
-        ImGui::End();
+            ImDrawList* draw = ImGui::GetWindowDrawList();
+            
+            auto node1 = zs::node::create(zs::eval::TRUE);
+            auto node2 = zs::node::create(zs::eval::TRUE);
+            auto node3 = zs::node::create(zs::eval::TRUE);
+            uinode n(zs::node::create(zs::eval::TRUE, {node1, node2, node3}));
+            n.draw(draw, center, shapewidth, ImColor(0.9f,0.9f,0.0f), shaperadius);
+
+            draw->AddLine({100, 100}, {400, 400}, ImColor(0.0f,0.9f,0.9f), 20.0f);
+
+        }ImGui::End();
         
         ImGui::Render();
 

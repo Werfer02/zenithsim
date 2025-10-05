@@ -20,12 +20,10 @@ class node{
     int id;
 
 public:
-    node(eval ineval) : evalfunc(std::make_shared<evalfunction>(evalfunctionmap[ineval])) { id = idcounter++; }
-    node(evalfunction ineval) : evalfunc(std::make_shared<evalfunction>(ineval)) { id = idcounter++; }
 
-    node(eval ineval, std::vector<connection> inconnections) : 
+    node(eval ineval, std::vector<connection> inconnections = {}) : 
     evalfunc(std::make_shared<evalfunction>(evalfunctionmap[ineval])), connections(inconnections) { id = idcounter++; }
-    node(evalfunction ineval, std::vector<connection> inconnections) : 
+    node(evalfunction ineval, std::vector<connection> inconnections = {}) : 
     evalfunc(std::make_shared<evalfunction>(ineval)), connections(inconnections) { id = idcounter++; }
 
     static std::shared_ptr<node> create(const eval&);
@@ -34,8 +32,9 @@ public:
     static std::shared_ptr<node> create(const evalfunction&, const std::vector<connection>&);
 
     void addconnection(const connection&);
-
     void setconnection(const connection&, int idx);
+
+    std::vector<connection> getconnections() const;
     void setconnections(const std::vector<connection>&);
 
     std::shared_ptr<evalfunction> getevalfunc() const;

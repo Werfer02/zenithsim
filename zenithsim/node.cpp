@@ -56,6 +56,10 @@ void node::setconnection(const connection& c, int idx){
     if(!(idx < connections.size())) std::cerr << "no such input: " << idx << ", connections.size(): " << connections.size();
     connections[idx] = c;
 }
+
+std::vector<connection> node::getconnections() const{
+    return connections;
+}
 void node::setconnections(const std::vector<connection>& inconnections){
     connections = inconnections;
 }

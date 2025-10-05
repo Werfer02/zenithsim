@@ -30,6 +30,8 @@ FetchContent_MakeAvailable(imgui)
 
 add_executable(zenithsim_gui
                app/main.cpp
+               app/uinode.cpp
+               app/uimanager.cpp
                ${imgui_SOURCE_DIR}/imgui.cpp
                ${imgui_SOURCE_DIR}/imgui_draw.cpp
                ${imgui_SOURCE_DIR}/imgui_tables.cpp
