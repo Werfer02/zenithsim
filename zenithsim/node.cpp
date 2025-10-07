@@ -72,6 +72,14 @@ void node::setevalfunc(std::shared_ptr<evalfunction> ef) {
     evalfunc = ef; 
 }
 
+int node::getvalidoutputcount(){
+    for(int i = connections.size(); i < 999999; i++){
+        if(evalfunc->operator()(std::vector<bool>(i, false)).size() > 0)
+        return evalfunc->operator()(std::vector<bool>(i, false)).size();
+    }
+    return -1;
+}
+
 int node::idcounter = 0;
 
 int node::getid() const{

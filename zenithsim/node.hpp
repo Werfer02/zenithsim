@@ -40,6 +40,8 @@ public:
     std::shared_ptr<evalfunction> getevalfunc() const;
     void setevalfunc(std::shared_ptr<evalfunction>);
 
+    int getvalidoutputcount();
+
     int getid() const;
 
     std::vector<bool> evaluate() const;

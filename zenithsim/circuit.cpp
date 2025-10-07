@@ -65,7 +65,7 @@ evalfunction Circuit::genevalfunction(){
     evalfunction outputmapeval = [outputsmap, numinputs](const std::vector<bool>& inputsvector) -> std::vector<bool>{
         
         if(inputsvector.size() == numinputs) return outputsmap.at(inputsvector);
-        return std::vector<bool>(1, false);
+        return std::vector<bool>(0);
 
     };
 
