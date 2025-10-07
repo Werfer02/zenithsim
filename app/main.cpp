@@ -8,8 +8,7 @@
 #include "imgui_impl_opengl3.h"
 #include "GLFW/glfw3.h"
 
-#include "uinode.hpp"
-#include "node.hpp"
+#include "uimanager.hpp"
 
 void glfwerrorcallback(int error, const char* description){
     std::cerr << "GLFW error " << error << ": " << description << std::endl;
@@ -30,7 +29,14 @@ int main(){
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init();
 
-    std::vector<uinode> uinodes;
+    uimanager uiman;
+    auto node1 = uiman.addnode(zs::eval::TRUE);
+    auto node2 = uiman.addnode(zs::eval::FALSE);
+    auto node3 = uiman.addnode(zs::eval::AND, {uiman.getsimnode(node1), uiman.getsimnode(node2)});
+
+    node1->setposition({300, 300});
+    node2->setposition({300, 600});
+    node3->setposition({600, 450});
 
     float shapewidth = 0, shaperadius = 0;
 
@@ -47,6 +53,10 @@ int main(){
 
         ImGui::Begin("Custom Shape");{
 
+            float fps = ImGui::GetIO().Framerate;
+
+            ImGui::Text("FPS: %f", fps);
+
             ImGui::SliderFloat("width", &shapewidth, -1.0f, 500.0f);
             ImGui::SliderFloat("connection radius", &shaperadius, -1.0f, 200.0f);
 
@@ -59,14 +69,10 @@ int main(){
             );
 
             ImDrawList* draw = ImGui::GetWindowDrawList();
-            
-            auto node1 = zs::node::create(zs::eval::TRUE);
-            auto node2 = zs::node::create(zs::eval::TRUE);
-            auto node3 = zs::node::create(zs::eval::TRUE);
-            uinode n(zs::node::create(zs::eval::TRUE, {node1, node2, node3}));
-            n.draw(draw, center, shapewidth, ImColor(0.9f,0.9f,0.0f), shaperadius);
 
-            draw->AddLine({100, 100}, {400, 400}, ImColor(0.0f,0.9f,0.9f), 20.0f);
+            ImGui::InvisibleButton("screen button", {10000.0f, 10000.0f});
+            uiman.handleinteraction();
+            uiman.render(draw);
 
         }ImGui::End();
         

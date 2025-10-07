@@ -2,27 +2,65 @@
 
 #include "node.hpp"
 
+ImVec2 uinode::getinputposition(float width, int idx, float connectionradius, float connectionspacing) const{
+
+    float connspacingactual = connectionspacing*connectionradius*2;
+    float connectionx = position.x - 0.5f*width;
+    float connectiony = position.y - 0.5f*(node->getconnections().size() - 1)*(2*connectionradius + connspacingactual) + idx*(2*connectionradius + connspacingactual);
+    return {connectionx, connectiony};
+
+}
+
+ImVec2 uinode::getoutputposition(float width, int idx, float connectionradius, float connectionspacing) const{
+
+    float connspacingactual = connectionspacing*connectionradius*2;
+    float connectionx = position.x + 0.5f*width;
+    float connectiony = position.y - 0.5f*(outputs - 1)*(2*connectionradius + connspacingactual) + idx*(2*connectionradius + connspacingactual);
+    return {connectionx, connectiony};
+
+}
+
+ImVec2 uinode::getposition() const{
+    return position;
+}
+
+void uinode::setposition(ImVec2 p){
+    position = p;
+}
+
+ImColor uinode::getcolor() const{
+    return color;
+}
+
+void uinode::setColor(ImColor c){
+    color = c;
+}
+
 void uinode::draw(ImDrawList* drawlist,
-    ImVec2 center,
     float width, 
-    ImColor col, 
     float connectionradius, 
     ImColor conncol, 
     float connectionspacing){
 
     float connspacingactual = connectionspacing*connectionradius*2;
-    float height = node->getconnections().size()*2*connspacingactual + (node->getconnections().size()+1)*connspacingactual;
+    int baseheighton = std::max((int)node->getconnections().size(), outputs);
+    float height = baseheighton*2*connspacingactual + (baseheighton+1)*connspacingactual;
 
-    ImVec2 topleft({center.x - 0.5f*width, center.y - 0.5f*height});
-    ImVec2 bottomright({center.x + 0.5f*width, center.y + 0.5f*height});
-    drawlist->AddRectFilled(topleft, bottomright, col, connectionradius);
+    ImVec2 topleft({position.x - 0.5f*width, position.y - 0.5f*height});
+    ImVec2 bottomright({position.x + 0.5f*width, position.y + 0.5f*height});
+    drawlist->AddRectFilled(topleft, bottomright, color, connectionradius);
 
     for(int i = 0; i < node->getconnections().size(); i++){
 
-        float connectionx = center.x - 0.5f*width;
-        float connectiony = center.y - 0.5f*(node->getconnections().size() - 1)*(2*connectionradius + connspacingactual) + i*(2*connectionradius + connspacingactual);
+        ImVec2 inputposition = getinputposition(width, i, connectionradius, connectionspacing);
+        drawlist->AddCircleFilled(inputposition, connectionradius, conncol, 32);
 
-        drawlist->AddCircleFilled({connectionx, connectiony}, connectionradius, conncol, 32);
+    }
+
+    for(int i = 0; i < outputs; i++){
+
+        ImVec2 outputposition = getoutputposition(width, i, connectionradius, connectionspacing);
+        drawlist->AddCircleFilled(outputposition, connectionradius, conncol, 32);
 
     }
 }
